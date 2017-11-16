@@ -66,5 +66,11 @@ def knight_moves(from, target)
   knight.bfs(target)
 end
 
-knight_moves([3,3], [3,2])
+knight_moves([3,3], [3,2]) # =>
+
+# You made it in 3 moves! Here is your path:
+# [3, 3]
+# [4, 5]
+# [5, 3]
+# [3, 2]
 
