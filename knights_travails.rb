@@ -30,8 +30,6 @@ class Knight
         # If tile is [3, 3] and pattern [1, -2] => [4, 1]
         child = [tile.data[0] + pattern[0], tile.data[1] + pattern[1]]
         if possible_move?(child)
-          # Push it to @visited so we won't visit that tile again.
-          @visited << child
           target_found = true if child == @target
           child = Tile.new(child, tile)
           # Push all the possible children to the tile for further iteration
@@ -39,6 +37,8 @@ class Knight
         end
       end
 
+      # Push the tile to @visited so we won't visit it again.
+      @visited << tile.data
       # If the target is not found, iterate through all the newly created children
       target_found ? break : build_tree(tile.children)
     end
@@ -54,8 +54,10 @@ class Knight
   end
 
   def show_path(path_ary)
-    puts "You made it in #{path_ary.length} moves! Here is your path:"
-    path_ary.each { |tile| puts tile.to_s }
+    puts "You made it in #{path_ary.length - 1} moves! Here is your path:"
+    puts "#{path_ary[0].to_s} <- Start"
+    path_ary[1..-2].each { |tile| puts tile.to_s }
+    puts "#{path_ary[0].to_s} <- Target"
   end
 
   def inside_board?(tile)
@@ -94,7 +96,7 @@ def knight_moves(from, target)
   knight.show_path(path)
 end
 
-knight_moves([3,3], [4,3])
+knight_moves([3,3], [2,3])
 
 # Build tree breadth-first until target is found (use queue)
 # When target is found assign it (as a node) to a class variable
